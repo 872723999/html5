@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<!-- saved from url=(0047)http://www.ruijieweb.com/admin/index/index.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <title>CLTPHP后台管理</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="./files/layui.css" media="all">
+    <link rel="stylesheet" href="./files/global.css" media="all">
+    <link rel="stylesheet" href="./files/font.css" media="all">
+
+<link id="layuicss-layer" rel="stylesheet" href="./files/layer.css" media="all"></head>
+<body class="skin-0">
+
+<script>
+    var ADMIN = '/static/admin';
+
+    var UserID = sessionStorage.getItem('UserID');
+    // 超级管理员
+    if(UserID.length==3){
+            var navs = [{
+            "id": 15,
+            "href": "Auth\/adminList",
+            "title": "权限管理",
+            "type": 1,
+            "status": 1,
+            "authopen": 0,
+            "icon": "icon-lifebuoy",
+            "condition": "",
+            "pid": 0,
+            "sort": 1,
+            "addtime": 1446535750,
+            "zt": 1,
+            "menustatus": 1,
+            "children": [{
+                "id": 16,
+                "href": "./admin_list.html",
+                "title": "管理员列表",
+                "type": 1,
+                "status": 1,
+                "authopen": 0,
+                "icon": "",
+                "condition": "",
+                "pid": 15,
+                "sort": 0,
+                "addtime": 1446535750,
+                "zt": 1,
+                "menustatus": 1
+            }]
+        }];
+    }else{
+    // 普通管理员
+            var navs = [{
+            "id": 455,
+            "href": "School",
+            "title": "学校管理",
+            "type": 1,
+            "status": 1,
+            "authopen": 1,
+            "icon": "",
+            "condition": "",
+            "pid": 0,
+            "sort": 50,
+            "addtime": 1552013492,
+            "zt": null,
+            "menustatus": 1,
+            "children": [{
+                "id": 456,
+                "href": "./school_index.html",
+                "title": "学校列表",
+                "type": 1,
+                "status": 1,
+                "authopen": 1,
+                "icon": "",
+                "condition": "",
+                "pid": 455,
+                "sort": 50,
+                "addtime": 1552013792,
+                "zt": null,
+                "menustatus": 1
+            }]
+        },{
+            "id": 459,
+            "href": "Course",
+            "title": "邀请码",
+            "type": 1,
+            "status": 1,
+            "authopen": 1,
+            "icon": "",
+            "condition": "",
+            "pid": 0,
+            "sort": 50,
+            "addtime": 1552102050,
+            "zt": null,
+            "menustatus": 1,
+            "children": [{
+                "id": 460,
+                "href": "./course.html",
+                "title": "选择课程",
+                "type": 1,
+                "status": 1,
+                "authopen": 1,
+                "icon": "",
+                "condition": "",
+                "pid": 459,
+                "sort": 50,
+                "addtime": 1552102099,
+                "zt": null,
+                "menustatus": 1
+            }]
+        }];
+    }
+    
+</script>
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header header">
+        <div class="layui-main">
+            <div class="admin-login-box">
+                <a class="logo" style="left: 0;" href="http://www.ruijieweb.com/admin/index/index.html">
+                    <span style="font-size: 22px;">CLTPHP</span>
+                </a>
+                <div class="admin-side-toggle fs1">
+                    <span class="icon icon-menu"></span>
+                </div>
+                <div class="admin-side-full">
+                    <span class="icon icon-enlarge"></span>
+                </div>
+            </div>
+
+            <ul class="layui-nav admin-header-item" lay-filter="side-top-right">
+                <li class="layui-nav-item">
+                    <a href="javascript:;" class="log_out"><font color="red">注销</font></a>
+                </li>
+            <span class="layui-nav-bar" style="left: 370px; top: 60px; width: 0px; opacity: 0;"></span></ul>
+        </div>
+    </div>
+    <div class="layui-side layui-bg-black" id="admin-side">
+        <div class="layui-side-scroll" id="admin-navbar-side" lay-filter="side">
+            <ul class="layui-nav layui-nav-tree beg-navbar">
+                <li class="layui-nav-item">
+                    <a href="javascript:;">
+                        <i class="icon icon-lifebuoy" aria-hidden="true" data-icon="icon-lifebuoy"></i><cite>权限管理</cite><span class="layui-nav-more"></span>
+                    </a>
+                    <dl class="layui-nav-child">
+                        <dd title="管理员列表">
+                            <a href="javascript:;" data-url="/admin/auth/adminlist.html">
+                                <cite>管理员列表</cite>
+                            </a>
+                        </dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;"><cite>邀请码</cite><span class="layui-nav-more"></span></a>
+                    <dl class="layui-nav-child">
+                        <dd title="选择课程">
+                            <a href="javascript:;" data-url="/admin/course/index.html">
+                                <cite>选择课程</cite>
+                            </a>
+                        </dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;">
+                        <cite>学校管理</cite><span class="layui-nav-more"></span>
+                    </a>
+                    <dl class="layui-nav-child">
+                        <dd title="学校列表">
+                            <a href="javascript:;" data-url="/admin/school/index.html"><cite>学校列表</cite></a>
+                        </dd>
+                    </dl>
+                </li><span class="layui-nav-bar" style="top: 112.5px; height: 0px; opacity: 0;"></span>
+            </ul>
+        </div>
+    </div>
+    <div class="layui-body" style="bottom: 0;border-left: solid 2px #1AA094;" id="admin-body">
+        <div class="layui-tab admin-nav-card layui-tab-brief" lay-filter="admin-tab">
+            <ul class="layui-tab-title">
+                <li class="layui-this" style="display: none;">
+                </li>
+            </ul>
+            <div class="layui-tab-content" style="min-height: 150px; padding: 0px; height: 563px;">
+                <div class="layui-tab-item layui-show">
+                    <iframe id="iframe" src="./admin_list.html" style="height: 563px;"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-footer footer footer-demo" id="admin-footer">
+        <div class="layui-main">
+            <p>2017 ©
+                <a href="http://www.cltphp.com/">www.cltphp.com</a> Apache Licence 2.0
+            </p>
+        </div>
+    </div>
+    <div class="site-tree-mobile layui-hide">
+        <i class="layui-icon"></i>
+    </div>
+    <div class="site-mobile-shade"></div>
+    <script type="text/javascript" src="./files/layui.js"></script>
+
+
+
+    <script src="./files/index.js"></script>
+    <script>
+        layui.config({
+            base : 'js/'
+        }).use('layer',function(){
+            var $ = layui.jquery, layer = layui.layer;
+            var TOKEN = sessionStorage.getItem('Token');
+            console.log(TOKEN);
+            // 没有登录跳转到登录页
+            if(!TOKEN){
+                location.href="./login.html";
+                return false;
+            }
+
+            // 注销
+            $('.log_out').click(function(){
+                sessionStorage.setItem('Token', null );
+                sessionStorage.setItem('UserID', null );
+                location.href="./login.html";
+            });
+
+            // 判断管理员类型加载不同的默认页面
+            if(UserID.length==3){
+                // 超级管理员
+                $("#iframe").attr('src','admin_list.html');
+            }else{
+                // 普通管理员
+                $("#iframe").attr('src','school_index.html');
+            }
+        })
+    </script>
+</div>
+
+</body></html>

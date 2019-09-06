@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<!-- saved from url=(0047)http://www.ruijieweb.com/admin/login/index.html -->
+<html lang="zh_cn"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>登录</title>
+    <link rel="stylesheet" href="./login/layui.css" media="all">
+    <link rel="stylesheet" href="./login/login.css">
+    <link rel="stylesheet" href="./login/font.css">
+    <!-- 工具js -->
+    <script type="text/javascript" src="./js/tool.js"></script>
+<div class="admin-main layui-anim layui-anim-upbit">
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend>添加学生</legend>
+    </fieldset>
+    <form class="layui-form layui-form-pane" lay-filter="form" id="form">
+        
+    </form>
+</div>
+<script type="text/javascript" src="./login/layui.js"></script>
+
+<script>
+    layui.use(['form', 'layer','upload'], function () {
+        var form = layui.form, layer = layui.layer,$= layui.jquery,upload = layui.upload;
+
+        // 没有登录跳转到登录页
+        if(!sessionStorage.getItem('Token')){
+            location.href="./login.html";
+            return false;
+        }
+        
+        // 学校id，添加时候等于0，修改时候等于id
+        // location.href
+        var location_href = window.location.href;
+        var SchoolId = 0;
+        if( location_href.indexOf("?") >= 0 ){
+            var tmp_arr1=location_href.split("?"); //字符分割 
+            var tmp_arr2=tmp_arr1[1].split("="); //字符分割
+            SchoolId = tmp_arr2[1];
+        }
+
+        // 用户token
+        var Token = sessionStorage.getItem('Token');
+        // 用户id
+        var UserID = sessionStorage.getItem('UserID');
+        // 根据登录角色，渲染页面字段
+        var str = '';
+        
+        // 普通管理员
+        str = 
+        `
+            <div class="layui-form-item">
+                <label class="layui-form-label">学校id</label>
+                <div class="layui-input-block">
+                    <input type="text" name="school_id" lay-verify="required" readonly value="${SchoolId}" placeholder="请输入学校id" class="layui-input">
+                </div>
+                <div class="layui-form-mid layui-word-aux"></div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">账号数量</label>
+                <div class="layui-input-block">
+                    <input type="text" name="num" lay-verify="required" placeholder="请输入账号数量" class="layui-input">
+                </div>
+                <div class="layui-form-mid layui-word-aux"></div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button type="button" class="layui-btn" lay-submit="" lay-filter="submit">添加</button>
+                    <a href="./school_index.html" class="layui-btn layui-btn-primary">返回</a>
+                </div>
+            </div>
+        `;
+        $("#form").html(str);
+
+
+        // 添加方法
+        form.on('submit(submit)', function (data) {
+            /**
+             * 添加管理员
+             * API ： SuperAdmin.setAdmin(int userID, string password, string note)
+             * @token 超级管理员token
+             */
+            var Fields = data.field;
+
+            // 接口请求地址
+            var url = test_api;
+
+                
+            // 普通管理员可以添加学校管理员
+            var data =  {
+                "c" : "Admin",
+                "m" : "addUser",
+                "p" : [SchoolId,Fields.num],
+                "t" : Token
+            };
+
+            var data_str = JSON.stringify(data);
+            $.ajax({
+                url : url,
+                dataType : 'json',
+                type : 'post',
+                contentType: 'application/json',
+                data : data_str,
+                success : function( res ){
+                    if( res.err!=0 ){
+                        // 失败
+                        alert(error_code[res['err']]);
+                        return false;
+                        // layer.msg(error_code[res['err']], {icon: 2, anim: 6, time: 1000});
+                    }else{
+                        alert('您共添加了'+res.res.SchoolUserTotal+'个账号');
+                        location.href="./school_index.html";
+                    }
+                }
+            }); // ajax END
+        }); // on END
+    }); // use END
+</script>

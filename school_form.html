@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<!-- saved from url=(0047)http://www.ruijieweb.com/admin/login/index.html -->
+<html lang="zh_cn"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>登录</title>
+    <link rel="stylesheet" href="./login/layui.css" media="all">
+    <link rel="stylesheet" href="./login/login.css">
+    <link rel="stylesheet" href="./login/font.css">
+    <!-- 工具js -->
+    <script type="text/javascript" src="./js/tool.js"></script>
+
+<div class="admin-main layui-anim layui-anim-upbit" ng-app="hd" ng-controller="ctrl">
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend>
+            修改学校
+        </legend>
+    </fieldset>
+    <form class="layui-form layui-form-pane">
+
+        <!-- 机构名称 begin -->
+        <div class="layui-form-item">
+            <label class="layui-form-label">机构名称</label>
+            <div class="layui-input-block">
+                <input type="text" name="title" value="" lay-verify="required" placeholder="请输入机构名称" class="layui-input">
+            </div>
+        </div>
+        <!-- 机构名称 end -->
+
+        <!-- 会员等级 begin -->
+        <div class="layui-form-item">
+            <label class="layui-form-label">会员等级</label>
+            <div class="layui-input-block">
+                <input type="text" name="level" value="" lay-verify="required" placeholder="请输入会员等级" class="layui-input">
+            </div>
+        </div>
+        <!-- 会员等级 end -->
+
+        <!-- 园长 begin -->
+        <div class="layui-form-item">
+            <label class="layui-form-label">园长</label>
+            <div class="layui-input-block">
+                <input type="text" name="principal" value="" lay-verify="required" placeholder="请输入园长" class="layui-input">
+            </div>
+        </div>
+        <!-- 园长 end -->
+
+        <!-- 园长联系方式 begin -->
+        <div class="layui-form-item">
+            <label class="layui-form-label">园长联系方式</label>
+            <div class="layui-input-block">
+                <input type="text" name="principal_tel" value="" lay-verify="required" placeholder="请输入园长联系方式" class="layui-input">
+            </div>
+        </div>
+        <!-- 园长联系方式 end -->
+
+        <!-- 联系人 begin -->
+        <div class="layui-form-item">
+            <label class="layui-form-label">联系人</label>
+            <div class="layui-input-block">
+                <input type="text" name="contacts" value="" lay-verify="required" placeholder="请输入联系人" class="layui-input">
+            </div>
+        </div>
+        <!-- 联系人 end -->
+
+        <!-- 联系人电话 begin -->
+        <div class="layui-form-item">
+            <label class="layui-form-label">联系人电话</label>
+            <div class="layui-input-block">
+                <input type="text" name="contacts_tel" value="" lay-verify="required" placeholder="请输入联系人电话" class="layui-input">
+            </div>
+        </div>
+        <!-- 联系人电话 end -->
+
+        <!-- 国家 begin -->
+        <div class="layui-form-item">
+            <label class="layui-form-label">国家</label>
+            <div class="layui-input-block">
+                <input type="text" name="country" value="" lay-verify="required" placeholder="请输入国家" class="layui-input">
+            </div>
+        </div>
+        <!-- 国家 end -->
+
+        <!-- 省 begin -->
+        <div class="layui-form-item">
+            <label class="layui-form-label">省</label>
+            <div class="layui-input-block">
+                <input type="text" name="province" value="" lay-verify="required" placeholder="请输入省" class="layui-input">
+            </div>
+        </div>
+        <!-- 省 end -->
+
+        <!-- 市 begin -->
+        <div class="layui-form-item">
+            <label class="layui-form-label">市</label>
+            <div class="layui-input-block">
+                <input type="text" name="city" value="" lay-verify="required" placeholder="请输入市" class="layui-input">
+            </div>
+        </div>
+        <!-- 市 end -->
+
+        <!-- 区 begin -->
+        <div class="layui-form-item">
+            <label class="layui-form-label">区</label>
+            <div class="layui-input-block">
+                <input type="text" name="area" value="" lay-verify="required" placeholder="请输入区" class="layui-input">
+            </div>
+        </div>
+        <!-- 区 end -->
+
+        <!-- 街道 begin -->
+        <div class="layui-form-item">
+            <label class="layui-form-label">街道</label>
+            <div class="layui-input-block">
+                <input type="text" name="street" value="" lay-verify="required" placeholder="请输入街道" class="layui-input">
+            </div>
+        </div>
+        <!-- 街道 end -->
+
+        <!-- 详细地址 begin -->
+        <div class="layui-form-item">
+            <label class="layui-form-label">详细地址</label>
+            <div class="layui-input-block">
+                <textarea name="address" id="address" placeholder="请输入详细地址" class="layui-textarea"></textarea>
+            </div>
+        </div>
+        <!-- 详细地址 end -->
+
+        <!-- 套盒数 begin -->
+        <div class="layui-form-item">
+            <label class="layui-form-label">套盒数</label>
+            <div class="layui-input-block">
+                <input type="text" name="num" value="" lay-verify="required" placeholder="请输入套盒数" class="layui-input">
+            </div>
+        </div>
+        <!-- 套盒数 end -->
+
+        <!-- 备注 begin -->
+        <div class="layui-form-item">
+            <label class="layui-form-label">备注</label>
+            <div class="layui-input-block">
+                <textarea name="remarks" id="remarks" placeholder="请输入备注" class="layui-textarea"></textarea>
+            </div>
+        </div>
+        <!-- 备注 end -->
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button type="button" class="layui-btn" lay-submit lay-filter="submit">提交</button>
+                <a href="./school_index.html" class="layui-btn layui-btn-primary">返回</a>
+            </div>
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="./login/layui.js"></script>
+<script>
+    layui.use(['form', 'layer'], function () {
+
+        var form = layui.form, $ = layui.jquery;
+        // 没有登录跳转到登录页
+        if(!sessionStorage.getItem('Token')){
+            location.href="./login.html";
+            return false;
+        }
+        
+        // 学校id，添加时候等于0，修改时候等于id
+        // location.href
+        var location_href = window.location.href;
+        var SchoolId = 0;
+        if( location_href.indexOf("?") >= 0 ){
+            var tmp_arr1=location_href.split("?"); //字符分割 
+            var tmp_arr2=tmp_arr1[1].split("="); //字符分割
+            SchoolId = tmp_arr2[1];
+        }
+        
+        // 用户token
+        var Token = sessionStorage.getItem('Token');
+
+        /**
+         * 添加方法（修改方法）
+         * API: Admin.setSchool(int schoolID, string name, array info)
+         */
+         // 提交方法
+        form.on('submit(submit)', function (data) {
+
+            var data = $("form").serializeArray();
+            // 接口请求地址
+            var url = test_api;
+            var data =  {
+                "c" : "Admin",
+                "m" : "setSchool",
+                "p" : [SchoolId,data[0]['value'],data],
+                "t" : Token
+            };
+            var data_str = JSON.stringify(data);
+            $.ajax({
+                url : url,
+                dataType : 'json',
+                type : 'post',
+                contentType: 'application/json',
+                data : data_str,
+                success : function( res ){
+                    loading =layer.load(1, {shade: [0.1,'#fff'] });//0.1透明度的白色背景
+                    layer.close(loading);
+                    if( res.err!=0 ){
+                        // 失败
+                        layer.msg(error_code[res['err']], {icon: 2, anim: 6, time: 1000});
+                    }else{
+                        var msg_str = '添加成功';
+                        if(SchoolId!=0){
+                            msg_str = '修改成功';
+                        }
+                        if(SchoolId==0){
+                            alert('学校管理员默认密码为【'+res.res.NewSchoolPassword+'】');
+                            location.href = "./school_index.html";
+                        }else{
+                            
+                            // 修改成功
+                            layer.msg(msg_str, {icon: 1, time: 1000}, function(){
+                                location.href = "./school_index.html";
+                            });  
+                        }
+                    }
+                }
+            });
+
+        });
+
+        /**
+         * 进入页面查询方法(修改之前查询)
+         * API：Admin.schoolInfo()
+         */
+        if(SchoolId!=0){
+            var url = test_api;
+            var data =  {
+                "c" : "Admin",
+                "m" : "schoolInfo",
+                "p" : [],
+                "t" : Token
+            };
+            var data_str = JSON.stringify(data);
+            $.ajax({
+                url : url,
+                dataType : 'json',
+                type : 'post',
+                contentType: 'application/json',
+                data : data_str,
+                success : function( res ){
+                    console.log(res);
+                    if(res.err==0){
+                        var data = $("form").serializeArray();
+                        $.each(data,function( key, val ){
+                            $('input[name="'+data[key]['name']+'"]').attr('value',res.res.SchoolInfo[SchoolId][key]['value']);
+                        });
+                        // 详细地址
+                        $("#address").html(res.res.SchoolInfo[SchoolId][11]['value']);
+                        // 备注
+                        $("#remarks").html(res.res.SchoolInfo[SchoolId][13]['value']);
+                    }
+                    return false;
+                }
+            });
+        }
+
+        
+    });
+</script>

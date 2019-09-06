@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<!-- saved from url=(0047)http://www.ruijieweb.com/admin/index/index.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <title>CLTPHP后台管理</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="./files/layui.css" media="all">
+    <link rel="stylesheet" href="./files/global.css" media="all">
+    <link rel="stylesheet" href="./files/font.css" media="all">
+<!--    二维码-->
+    <script type="text/javascript" src="./js/qrcode.min.js"></script>
+
+<link id="layuicss-layer" rel="stylesheet" href="./files/layer.css" media="all"></head>
+<!-- 工具js -->
+<script type="text/javascript" src="./js/tool.js"></script>
+<div class="admin-main layui-anim layui-anim-upbit">
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend课程管理</legend>
+    </fieldset>
+    <div class="demoTable">
+        <!-- <label><input type="checkbox" value="" id="select_all" />全选</label> -->
+        <div class="layui-inline">
+            <input class="layui-input" name="num" id="num" placeholder="请输入生成激活码的数量">
+        </div>
+        <button class="layui-btn" id="sub_btn" data-type="reload">生成激活码</button>
+        <!-- <button class="layui-btn layui-btn-warm" id="sub_btn">下载</button> -->
+    </div>
+    <table class="layui-table" id="list" lay-filter="list"></table>
+</div>
+
+<body>
+    <table class="layui-table" lay-skin="line ">
+        <colgroup>
+        <col width="150">
+        <col width="200">
+        <col>
+        </colgroup>
+        <thead>
+            <tr>
+                <th>课程id</th>
+                <th>课程名字</th>
+                <th>课程次数</th>
+            </tr> 
+        </thead>
+        <!-- 数据 begin -->
+        <tbody id="data">
+            
+        </tbody>
+        <!-- 数据 end -->
+    </table>
+    <div id="qrcode" class="qrcode" style="width:100px; height:100px; margin-top:15px;display: none;"></div>
+</body>
+<script type="text/javascript" src="./files/layui.js"></script>
+<script type="text/javascript" src="./files/modules/jquery.js"></script>
+<script>
+<!--    二维码-->
+    var qrcode = new QRCode(document.getElementById("qrcode"), {
+        width : 100,
+        height : 100
+    });
+
+    layui.use(['table','form'], function() {
+        /**
+         * 课程列表
+         */
+        var table = layui.table,form = layui.form,$ = layui.jquery;
+
+        // 没有登录跳转到登录页
+        if(!sessionStorage.getItem('Token')){
+            location.href="./login.html";
+            return false;
+        }
+        
+        $("#num").focus();
+        // 请求地址
+        var url = "http://47.99.151.14/fakeCDN/config/lesson.json";
+
+        $.ajax({
+            url : url,
+            dataType : 'json',
+            type : 'get',
+            data : '',
+            success : function( res ){
+                if(res){
+                    $.each(res,function( key, val ){
+                        str += `
+                                <tr class="lessonList">
+                                    <td>${key}</td>
+                                    <td>${val.name}</td>
+                                    <td><input type="text" class="course_num" placeholder="请输入课程次数" value="0"></td>
+                                </tr>
+                            `;
+                    });
+                }else{
+                    var str = '<div style="text-align:center;width:100%;">数据为空</div>';
+                }
+                $("#data").html(str);
+            }
+        }); // ajax END
+
+        // 控制课程次数的最大值为99
+        $('body').on('blur','.course_num',function(){
+            if( $(this).val()*1 > 99){
+                alert('课程次数最大值应为99');
+                $(this).val("0");
+                $(this).focus();
+                return false;
+            }
+        });
+
+        // 生成邀请码
+        $('#sub_btn').click(function(){
+            // 生成数量
+            var num = $("#num").val();
+            if(!num){
+                alert('请输入生成激活码的数量');
+                $("#num").focus();
+                return false;
+            }
+            // 键值是课程id，value是数量
+            var ids_obj = new Object();            
+            $.each($('.lessonList'),function( key,val ){
+                if( $(val).children('td').eq(2).children('input').val() != 0 ){
+                    ids_obj[$(val).children('td').eq(0).html()] = $(val).children('td').eq(2).children('input').val();
+                }
+            });
+
+            // 用户token
+            var Token = sessionStorage.getItem('Token');
+
+            // 请求地址
+            var url = test_api;
+            // 请求数据
+            var data =  {
+                "c" : "Admin",
+                "m" : "addCoupon",
+                "p" : [ids_obj,num],
+                "t" : Token
+            };
+
+            var data_str = JSON.stringify(data);
+
+            $.ajax({
+                url : url,
+                dataType : 'json',
+                type : 'post',
+                contentType: 'application/json',
+                data : data_str,
+                success : function( res ){
+                    if(res.err==0){
+                        layer.open({
+                            title: '邀请码生成成功'
+                            ,content: `邀请码码为【${res.res.NewCoupon}】<font color="red">请妥善保管</font>`
+                            ,btn: ['生成二维码','确定']
+                            ,yes: function(index, layero){
+                                //按钮【按钮一】的回调
+                                // for (var i=0; i<=res.res.NewCoupon.length; i++){
+                                    downloadFile($('.qrcode'),'1.jpg')
+                                // }
+                                //
+                                layer.close(index);
+
+                            }
+                            ,btn2: function(index, layero){
+                                //按钮【按钮二】的回调
+                                layer.close(index);
+                                //return false 开启该代码可禁止点击该按钮关闭
+                            }
+                            ,cancel: function(){ 
+                            //右上角关闭回调
+                            
+                            //return false 开启该代码可禁止点击该按钮关闭
+                            }
+                        });
+                    }
+                }
+            }); // ajax END
+        });
+
+        //下载图片
+        function downloadFile(content, fileName) { //下载base64图片
+            var content = content.children('img').attr('src');
+            var base64ToBlob = function(code) {
+                let parts = code.split(';base64,');
+                let contentType = parts[0].split(':')[1];
+                let raw = window.atob(parts[1]);
+                let rawLength = raw.length;
+                let uInt8Array = new Uint8Array(rawLength);
+                for(let i = 0; i < rawLength; ++i) {
+                    uInt8Array[i] = raw.charCodeAt(i);
+                }
+                return new Blob([uInt8Array], {
+                    type: contentType
+                });
+            };
+            let aLink = document.createElement('a');
+            let blob = base64ToBlob(content); //new Blob([content]);
+            let evt = document.createEvent("HTMLEvents");
+            evt.initEvent("click", true, true); //initEvent 不加后两个参数在FF下会报错  事件类型，是否冒泡，是否阻止浏览器的默认行为
+            aLink.download = fileName;
+            aLink.href = URL.createObjectURL(blob);
+            aLink.click();
+        };
+
+        qrcode.makeCode('二维码');
+    }) // use END
+</script>

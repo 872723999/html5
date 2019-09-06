@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<!-- saved from url=(0047)http://www.ruijieweb.com/admin/login/index.html -->
+<html lang="zh_cn"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>登录</title>
+    <link rel="stylesheet" href="./login/layui.css" media="all">
+    <link rel="stylesheet" href="./login/login.css">
+    <link rel="stylesheet" href="./login/font.css">
+    <!-- 工具js -->
+    <script type="text/javascript" src="./js/tool.js"></script>
+<link id="layuicss-layer" rel="stylesheet" href="./login/layer.css" media="all"></head>
+<body class="beg-login-bg">
+<div class="container login">
+    <div class="content">
+        <div id="large-header" class="large-header" style="height: 759px;">
+            <canvas id="demo-canvas" width="1536" height="759"></canvas>
+            <div class="main-title">
+                <div class="beg-login-box">
+                    <header>
+                        <h1>CLTPHP后台登录</h1>
+                    </header>
+                    <div class="beg-login-main">
+                        <form class="layui-form layui-form-pane" method="post">
+                            <div class="layui-form-item">
+                                <label class="beg-login-icon fs1">
+                                    <span class="icon icon-user"></span>
+                                </label>
+                                <input type="text" name="username" id="username" lay-verify="required" placeholder="这里输入登录名" value="" class="layui-input">
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="beg-login-icon fs1">
+                                    <i class="icon icon-key"></i>
+                                </label>
+                                <input type="password" name="password" id="password" lay-verify="required" placeholder="这里输入密码" value="" class="layui-input">
+                            </div>
+                            <div class="layui-form-item">
+                                <button type="button" id="submit" class="layui-btn btn-submit btn-blog" lay-submit="" lay-filter="login">登录</button>
+                            </div>
+                        </form>
+                    </div>
+                    <footer>
+                        <p>CLTPHP © </p>
+                    </footer>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="./login/rAF.js"></script>
+<script src="./login/login.js"></script>
+<script type="text/javascript" src="./login/layui.js"></script>
+<script>
+    layui.use('form',function(){
+        var form = layui.form,$ = layui.jquery;
+
+
+        $("#submit").click(function( msg ){
+            // 接口请求地址
+            var url = test_api;
+            // 用户名
+            var username = $("#username").val();
+            // 密码
+            var password = $("#password").val();
+
+            var data = {
+                "c": "User",
+                "m": "login",
+                "p": [username, password],
+                "t": "" 
+            };
+
+            var data_str = JSON.stringify(data);
+            /**
+             * @function [登录接口]
+             * User.login
+             */
+            $.ajax({
+                url : url,
+                dataType : 'json',
+                type : 'post',
+                contentType: 'application/json',
+                data : data_str,
+                success : function( res ){
+                    loading =layer.load(1, {shade: [0.1,'#fff'] });//0.1透明度的白色背景
+                    layer.close(loading);
+                    if( res.err!=0 ){
+                        layer.msg(error_code[res['err']], {icon: 2, anim: 6, time: 1000});
+                    }else{
+                        
+                        // storege  存值
+                        sessionStorage.setItem('Token', res.res.Token );
+                        sessionStorage.setItem('UserID', res.res.UserID );
+
+                        // storege  取值
+                        var Token = sessionStorage.getItem('Token');
+                        var UserID = sessionStorage.getItem('UserID');
+
+                        layer.msg('登录成功', {icon: 1, time: 1000}, function(){
+                            location.href = "./index.html";
+                        });
+                    }
+                }
+            });
+
+        });
+    });
+</script>
+
+</body></html>

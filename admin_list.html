@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<!-- saved from url=(0047)http://www.ruijieweb.com/admin/login/index.html -->
+<html lang="zh_cn"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>登录</title>
+    <link rel="stylesheet" href="./login/layui.css" media="all">
+    <link rel="stylesheet" href="./login/login.css">
+    <link rel="stylesheet" href="./login/font.css">
+    <!-- 工具js -->
+    <script type="text/javascript" src="./js/tool.js"></script>
+<div class="admin-main layui-anim layui-anim-upbit">
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend>管理员列表</legend>
+    </fieldset>
+    <div class="demoTable">
+        <a href="./admin_form.html" class="layui-btn" style="float:right;"><i class="fa fa-plus" aria-hidden="true"></i>添加管理员</a>
+        <div style="clear: both;"></div>
+    </div>
+    <table class="layui-table" id="list" lay-filter="list"></table>
+</div>
+
+
+<body>
+    <table class="layui-table" lay-skin="line ">
+        <colgroup>
+        <col width="150">
+        <col width="200">
+        <col>
+        </colgroup>
+        <thead>
+            <tr>
+                <th>用户id</th>
+                <th>用户名字</th>
+            </tr> 
+        </thead>
+        <!-- 数据 begin -->
+        <tbody id="data">
+            
+        </tbody>
+        <!-- 数据 end -->
+
+    </table>    
+</body>
+<script type="text/javascript" src="./files/layui.js"></script>
+
+<script>
+    layui.use(['table','form'], function() {
+        var table = layui.table,form = layui.form,$ = layui.jquery;
+        
+        // 没有登录跳转到登录页
+        if(!sessionStorage.getItem('Token')){
+            location.href="./login.html";
+            return false;
+        }
+        
+        // 用户token
+        var Token = sessionStorage.getItem('Token');
+        /**
+         * 管理员列表
+         * SuperAdmin.adminList()
+         * @token 超级管理员token
+         */
+        // 请求地址
+        var url = test_api;
+        // 请求数据
+        var data =  {
+            "c" : "SuperAdmin",
+            "m" : "adminList",
+            "p" : [],
+            "t" : Token
+        };
+
+        var data_str = JSON.stringify(data);
+
+        $.ajax({
+            url : url,
+            dataType : 'json',
+            type : 'post',
+            contentType: 'application/json',
+            data : data_str,
+            success : function( res ){
+                // 失败
+                if( res.err!=0 ){
+                    layer.msg(error_code[res['err']], {icon: 2, anim: 6, time: 1000});
+                }else{
+                    // 数据str
+                    var str = '';
+                    // 数据为空
+                    if(res.res.AdminList!=null){
+                        $.each(res.res.AdminList,function( key, val ){
+                            str += `
+                                <tr>
+                                    <td>${key}</td>
+                                    <td>${val}</td>
+                                </tr>
+                            `;
+                        });
+                    }else{
+                        var str = '<div style="text-align:center;width:100%;">数据为空</div>';
+                    }
+
+                    $("#data").html(str);
+                }
+            }
+        });
+
+
+    });
+</script>
+</body>
+</html>
